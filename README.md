@@ -13,10 +13,11 @@ in [Docker](#docker). Either way the phone needs the
 
 ## Resources
 
-**Docker image**
+**Docker image** — published on [Docker Hub](https://hub.docker.com/r/kurtzk10/drowsiness-detector-thesis).
+`docker compose` uses this image; it does not build from the Dockerfile.
 
 ```powershell
-docker pull ghcr.io/kurtzk10/drowsiness-detector-thesis:1.2.3
+docker pull kurtzk10/drowsiness-detector-thesis:1.2.3
 ```
 
 **GitHub repository** — <https://github.com/kurtzk10/drowsiness-detector-thesis>
@@ -49,9 +50,9 @@ Android 8.0 or newer.
    git clone https://github.com/kurtzk10/drowsiness-detector-thesis.git
    cd drowsiness-detector-thesis
    ```
-3. Download the Docker image (requires internet):
+3. Download the Docker image from Docker Hub (requires internet):
    ```powershell
-   docker pull ghcr.io/kurtzk10/drowsiness-detector-thesis:1.2.3
+   docker pull kurtzk10/drowsiness-detector-thesis:1.2.3
    ```
 4. Install the camera bridge dependency:
    ```powershell
@@ -168,11 +169,15 @@ backend on Windows) running. One image, three modes:
 | `headless` | Windows, macOS, Linux | laptop webcam via the bridge | no | yes, auto-discovered by the bridge |
 | `live` | Linux / Raspberry Pi | USB webcam | yes | yes, auto-discovered |
 
-Build once:
+The image comes from [Docker Hub](https://hub.docker.com/r/kurtzk10/drowsiness-detector-thesis);
+`docker compose` never builds from the Dockerfile. Pull it once:
 
 ```powershell
-docker compose --profile validate build validate
+docker pull kurtzk10/drowsiness-detector-thesis:1.2.3
 ```
+
+To test changes to the Dockerfile, rebuild the image locally under the same
+name with `docker build -t kurtzk10/drowsiness-detector-thesis:1.2.3 .`
 
 **validate** — replay a clip through the real detection modules. Put the clip
 in `videos/`; the per-frame CSV is written next to it.

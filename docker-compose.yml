@@ -7,8 +7,7 @@
 # Logs land in ./logs; put clips to replay in ./videos.
 
 x-detector: &detector
-  build: .
-  image: drowsiness-detector
+  image: kurtzk10/drowsiness-detector-thesis:1.2.3
   volumes:
     - ./logs:/app/logs
     - ./videos:/videos
