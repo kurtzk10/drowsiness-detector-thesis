@@ -11,6 +11,89 @@ in [Docker](#docker). Either way the phone needs the
 [alert app](#phone-alert-app-android) — download the APK from the
 [latest release](https://github.com/kurtzk10/drowsiness-detector-thesis/releases/latest).
 
+## Resources
+
+**Docker image**
+
+```powershell
+docker pull ghcr.io/kurtzk10/drowsiness-detector-thesis:1.2.3
+```
+
+**GitHub repository** — <https://github.com/kurtzk10/drowsiness-detector-thesis>
+
+Contains the source code of the Real-Time Driver Drowsiness Detection System,
+including the laptop-side detection program, the Android alert application,
+the EyeCNN training pipeline, and the Docker configuration.
+
+**Mobile alert application** — <https://github.com/kurtzk10/drowsiness-detector-thesis/releases/latest>
+
+Provides the Android companion application (`drowsiness-alert.apk`), which
+receives drowsiness alerts from the laptop and sounds the alarm. Requires
+Android 8.0 or newer.
+
+## Installation and Setup
+
+### System requirements
+- Windows 10/11 laptop with a webcam
+- Docker Desktop (WSL 2 backend)
+- Python 3.11 or newer
+- Git
+- Android phone running Android 8.0 or newer, with mobile hotspot
+
+### A. Laptop setup (one time)
+1. Install [Docker Desktop](https://www.docker.com/products/docker-desktop/)
+   and restart the laptop. Open Docker Desktop and wait until it shows
+   "Engine running."
+2. Open PowerShell and download the system files:
+   ```powershell
+   git clone https://github.com/kurtzk10/drowsiness-detector-thesis.git
+   cd drowsiness-detector-thesis
+   ```
+3. Download the Docker image (requires internet):
+   ```powershell
+   docker pull ghcr.io/kurtzk10/drowsiness-detector-thesis:1.2.3
+   ```
+4. Install the camera bridge dependency:
+   ```powershell
+   python -m pip install opencv-python
+   ```
+
+### B. Phone setup (one time)
+1. Download `drowsiness-alert.apk` from the
+   [latest release](https://github.com/kurtzk10/drowsiness-detector-thesis/releases/latest).
+2. Open the file on the phone and allow "Install unknown apps" when prompted.
+3. Open the app, allow notifications, and set the app's battery usage to
+   "Unrestricted."
+4. Turn the phone's alarm volume up.
+
+### C. Running the system
+1. Turn on the phone's mobile hotspot and connect the laptop to it. In
+   Windows, set this network's profile to "Private."
+2. Open the Drowsiness Alert app on the phone.
+3. In the first PowerShell window, inside the project folder, start the
+   camera bridge and leave it running:
+   ```powershell
+   python tools\webcam_bridge.py
+   ```
+4. In a second PowerShell window, inside the project folder, start the
+   detection system:
+   ```powershell
+   docker compose --profile headless up
+   ```
+5. If Windows Firewall asks for permission, allow access on private networks.
+6. Sit in front of the camera and look straight ahead. The system calibrates
+   automatically when it first detects a face, and the phone app shows
+   "Live feed connected."
+7. The phone alarm sounds when the driver's eyes stay closed for 2 seconds, a
+   yawn lasts 3 seconds, or the head turns away for 1.5 seconds. Press a
+   volume key to silence the alarm.
+8. To stop, press `Ctrl+C` in both PowerShell windows. Session logs are saved
+   in the `logs` folder.
+
+### Alternative (without Docker)
+Follow [Quick Setup](#quick-setup) below. It opens a window showing the
+detection overlay; press `C` to calibrate and `Q` to quit.
+
 ## Quick Setup
 
 ### 1. Install dependencies
