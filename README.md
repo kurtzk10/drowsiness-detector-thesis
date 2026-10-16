@@ -17,7 +17,7 @@ in [Docker](#docker). Either way the phone needs the
 `docker compose` uses this image; it does not build from the Dockerfile.
 
 ```powershell
-docker pull kurtzk10/drowsiness-detector-thesis:1.2.3
+docker pull kurtzk10/drowsiness-detector-thesis:latest
 ```
 
 **GitHub repository** — <https://github.com/kurtzk10/drowsiness-detector-thesis>
@@ -52,7 +52,7 @@ Android 8.0 or newer.
    ```
 3. Download the Docker image from Docker Hub (requires internet):
    ```powershell
-   docker pull kurtzk10/drowsiness-detector-thesis:1.2.3
+   docker pull kurtzk10/drowsiness-detector-thesis:latest
    ```
 4. Install the camera bridge dependency:
    ```powershell
@@ -173,11 +173,11 @@ The image comes from [Docker Hub](https://hub.docker.com/r/kurtzk10/drowsiness-d
 `docker compose` never builds from the Dockerfile. Pull it once:
 
 ```powershell
-docker pull kurtzk10/drowsiness-detector-thesis:1.2.3
+docker pull kurtzk10/drowsiness-detector-thesis:latest
 ```
 
 To test changes to the Dockerfile, rebuild the image locally under the same
-name with `docker build -t kurtzk10/drowsiness-detector-thesis:1.2.3 .`
+name with `docker build -t kurtzk10/drowsiness-detector-thesis:latest .`
 
 **validate** — replay a clip through the real detection modules. Put the clip
 in `videos/`; the per-frame CSV is written next to it.
